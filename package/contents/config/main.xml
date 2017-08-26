@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name=""/>
+  <group name="General">
+    <entry name="source" type="String">
+      <label>Source</label>
+      <default>CoinMarketCap</default>
+    </entry>
+	<entry name="currency" type="String">
+      <label>Currency</label>
+      <default>USD</default>
+    </entry>
+    <entry name="refreshRate" type="Int">
+      <label>Refresh rate</label>
+      <default>10</default>
+    </entry>
+    <entry name="showIcon" type="bool">
+      <label>Show icon</label>
+      <default>true</default>
+    </entry>
+	<entry name="onClickAction" type="String">
+      <label>On click</label>
+      <default>refresh</default>
+    </entry>
+  </group>
+</kcfg>
