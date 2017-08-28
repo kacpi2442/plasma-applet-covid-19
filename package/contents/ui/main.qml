@@ -1,20 +1,5 @@
 /***************************************************************************
- *   Copyright (C) %{CURRENT_YEAR} by %{AUTHOR} <%{EMAIL}>                            *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
+ *   Copyright (C) 2017 by MakG <makg@makg.eu>                             *
  ***************************************************************************/
 
 import QtQuick 2.1
@@ -28,18 +13,31 @@ import "../code/bitcoin.js" as Bitcoin
 Item {
 	id: root
 	
-	width: units.gridUnit * 10
-	height: units.gridUnit * 2
+	Layout.fillHeight: true
 	
 	property string bitcoinRate: '...'
 	property bool showIcon: plasmoid.configuration.showIcon
+	property bool showText: plasmoid.configuration.showText
 	property bool updatingRate: false
 	
 	Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
 	Plasmoid.toolTipTextFormat: Text.RichText
 	
 	Plasmoid.compactRepresentation: Item {
-		Layout.fillWidth: true
+		property int textMargin: bitcoinIcon.height * 0.25
+		property int minWidth: {
+			if(root.showIcon && root.showText) {
+				return bitcoinValue.paintedWidth + bitcoinIcon.width + textMargin;
+			}
+			else if(root.showIcon) {
+				return bitcoinIcon.width;
+			} else {
+				return bitcoinValue.paintedWidth
+			}
+		}
+		
+		Layout.fillWidth: false
+		Layout.minimumWidth: minWidth
 
 		MouseArea {
 			id: mouseArea
@@ -74,21 +72,11 @@ Item {
 			anchors.top: parent.top
 			anchors.left: parent.left
 			anchors.topMargin: parent.height * 0.05
-			anchors.leftMargin: parent.height * 0.05
+			anchors.leftMargin: root.showText ? parent.height * 0.05 : 0
 			
 			source: "../images/bitcoin.svg"
 			visible: root.showIcon
 			opacity: root.updatingRate ? 0.2 : mouseArea.containsMouse ? 0.8 : 1.0
-			
-			states: State {
-				name: "mouseover"
-				PropertyChanges { target: bitcoinIcon; opacity: 0.5; rotation: 180 }
-			}
-			
-			transitions: Transition {
-				from: "*"; to: "mouseover"
-				NumberAnimation { properties: "opacity,rotation"; easing.type: Easing.OutBounce; duration: 2000 }
-			}
 		}
 		
 		PlasmaComponents.Label {
@@ -96,15 +84,16 @@ Item {
 			height: parent.height
 			anchors.left: root.showIcon ? bitcoinIcon.right : parent.left
 			anchors.right: parent.right
-			anchors.leftMargin: root.showIcon ? 10 : 0
+			anchors.leftMargin: root.showIcon ? textMargin : 0
 			
 			horizontalAlignment: root.showIcon ? Text.AlignLeft : Text.AlignHCenter
 			verticalAlignment: Text.AlignVCenter
 			
+			visible: root.showText
 			opacity: root.updatingRate ? 0.2 : mouseArea.containsMouse ? 0.8 : 1.0
 			
 			fontSizeMode: Text.Fit
-			minimumPixelSize: 10
+			minimumPixelSize: bitcoinIcon.width * 0.7
 			font.pixelSize: 72			
 			text: root.bitcoinRate
 		}

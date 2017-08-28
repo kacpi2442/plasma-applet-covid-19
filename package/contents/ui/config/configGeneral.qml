@@ -13,6 +13,7 @@ Item {
 	property string cfg_onClickAction: plasmoid.configuration.onClickAction
 	property alias cfg_refreshRate: refreshRate.value
 	property alias cfg_showIcon: showIcon.checked
+	property alias cfg_showText: showText.checked
 	property variant sourceList: { Bitcoin.getAllSources() }
 	property variant currencyList: { Bitcoin.getAllCurrencies() }
 
@@ -76,6 +77,31 @@ Item {
 		CheckBox {
 			id: showIcon
 			text: i18n("Show icon")
+			onClicked: {
+				if(!this.checked) {
+					showText.checked = true
+					showText.enabled = false
+				} else {
+					showText.enabled = true
+				}
+			}
+		}
+		
+		Label {
+			text: ""
+		}
+		
+		CheckBox {
+			id: showText
+			text: i18n("Show text (when disabled, the rate is visible on hover)")
+			onClicked: {
+				if(!this.checked) {
+					showIcon.checked = true
+					showIcon.enabled = false
+				} else {
+					showIcon.enabled = true
+				}
+			}
 		}
 		
 		Label {
@@ -85,7 +111,7 @@ Item {
 		ExclusiveGroup { id: clickGroup }
 		
 		RadioButton {
-			Layout.row: 4
+			Layout.row: 5
 			Layout.column: 1
 			exclusiveGroup: clickGroup
 			checked: cfg_onClickAction == 'refresh'
@@ -96,7 +122,7 @@ Item {
 		}
 
 		RadioButton {
-			Layout.row: 5
+			Layout.row: 6
 			Layout.column: 1
 			exclusiveGroup: clickGroup
 			checked: cfg_onClickAction == 'website'

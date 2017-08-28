@@ -38,3 +38,12 @@ Use additional `-g` flag to install plasmoid globally, for all users.
 ![Bitcoin Price Plasmoid (Panel)](https://raw.githubusercontent.com/MakG10/plasma-applet-bitcoin-price/master/bitcoin-price-panel.png)
 
 ![Bitcoin Price Plasmoid (Configuration)](https://raw.githubusercontent.com/MakG10/plasma-applet-bitcoin-price/master/bitcoin-price-config.png)
+
+## Changelog
+
+### 1.1
+- Fixed displaying on panels (issue #1)
+- Added "Show text" option
+
+### 1.0
+Initial release
