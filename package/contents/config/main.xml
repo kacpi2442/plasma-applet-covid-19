@@ -29,5 +29,13 @@
       <label>On click</label>
       <default>refresh</default>
     </entry>
+    <entry name="showDecimals" type="bool">
+      <label>Show decimals</label>
+      <default>true</default>
+    </entry>
+    <entry name="showBackground" type="bool">
+      <label>Show background</label>
+      <default>true</default>
+    </entry>
   </group>
 </kcfg>

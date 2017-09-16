@@ -22,6 +22,7 @@ Item {
 	
 	Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
 	Plasmoid.toolTipTextFormat: Text.RichText
+	Plasmoid.backgroundHints: plasmoid.configuration.showBackground ? "StandardBackground" : "NoBackground"
 	
 	Plasmoid.compactRepresentation: Item {
 		property int textMargin: bitcoinIcon.height * 0.25
@@ -116,6 +117,9 @@ Item {
 		onRefreshRateChanged: {
 			bitcoinTimer.restart();
 		}
+		onShowDecimalsChanged: {
+			bitcoinTimer.restart();
+		}
 	}
 	
 	Timer {
@@ -128,7 +132,13 @@ Item {
 			root.updatingRate = true;
 			
 			var result = Bitcoin.getRate(plasmoid.configuration.source, plasmoid.configuration.currency, function(rate) {
-				root.bitcoinRate = Number(rate).toLocaleCurrencyString(Qt.locale(), Bitcoin.currencySymbols[plasmoid.configuration.currency]);
+				if(!plasmoid.configuration.showDecimals) rate = Math.floor(rate);
+				
+				var rateText = Number(rate).toLocaleCurrencyString(Qt.locale(), Bitcoin.currencySymbols[plasmoid.configuration.currency]);
+				
+				if(!plasmoid.configuration.showDecimals) rateText = rateText.replace(Qt.locale().decimalPoint + '00', '');
+				
+				root.bitcoinRate = rateText;
 				
 				var toolTipSubText = '<b>' + root.bitcoinRate + '</b>';
 				toolTipSubText += '<br />';

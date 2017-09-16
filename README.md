@@ -18,6 +18,10 @@ Use additional `-g` flag to install plasmoid globally, for all users.
 - Bitmaszyna.pl
 - BitBay
 - Blockchain.info
+- Bitfinex
+- Bitstamp
+- Kraken
+- GDAX
 
 ## Supported currencies
 - USD ($) - US Dollar
@@ -40,6 +44,11 @@ Use additional `-g` flag to install plasmoid globally, for all users.
 ![Bitcoin Price Plasmoid (Configuration)](https://raw.githubusercontent.com/MakG10/plasma-applet-bitcoin-price/master/bitcoin-price-config.png)
 
 ## Changelog
+
+### 1.2
+- Added new exchange sources: Bitfinex, Bitstamp, Kraken, GDAX
+- Added "Show decimals" option to show/hide decimals in the price
+- Added "Show background" option to show/hide plasmoid background on the desktop
 
 ### 1.1
 - Fixed displaying on panels (issue #1)

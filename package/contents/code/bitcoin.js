@@ -44,6 +44,42 @@ var sources = [
 			return data.USD.last;
 		}
 	},
+	{
+		name: 'Bitfinex',
+		url: 'https://api.bitfinex.com/v1/pubticker/btcusd',
+		homepage: 'https://www.bitfinex.com/',
+		currency: 'USD',
+		getRate: function(data) {
+			return data.ask;
+		}
+	},
+	{
+		name: 'Bitstamp',
+		url: 'https://www.bitstamp.net/api/ticker',
+		homepage: 'https://www.bitstamp.net/',
+		currency: 'USD',
+		getRate: function(data) {
+			return data.ask;
+		}
+	},
+	{
+		name: 'Kraken',
+		url: 'https://api.kraken.com/0/public/Ticker?pair=XXBTZUSD',
+		homepage: 'https://www.kraken.com',
+		currency: 'USD',
+		getRate: function(data) {
+			return data.result.XXBTZUSD.a[0];
+		}
+	},
+	{
+		name: 'GDAX',
+		url: 'https://api-public.sandbox.gdax.com/products/BTC-USD/ticker',
+		homepage: 'https://www.gdax.com/',
+		currency: 'USD',
+		getRate: function(data) {
+			return data.ask;
+		}
+	},
 ];
 
 var currencyApiUrl = 'http://api.fixer.io';

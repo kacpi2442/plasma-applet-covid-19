@@ -14,6 +14,8 @@ Item {
 	property alias cfg_refreshRate: refreshRate.value
 	property alias cfg_showIcon: showIcon.checked
 	property alias cfg_showText: showText.checked
+	property alias cfg_showDecimals: showDecimals.checked
+	property alias cfg_showBackground: showBackground.checked
 	property variant sourceList: { Bitcoin.getAllSources() }
 	property variant currencyList: { Bitcoin.getAllCurrencies() }
 
@@ -105,13 +107,31 @@ Item {
 		}
 		
 		Label {
+			text: ""
+		}
+		
+		CheckBox {
+			id: showDecimals
+			text: i18n("Show decimals")
+		}
+		
+		Label {
+			text: ""
+		}
+		
+		CheckBox {
+			id: showBackground
+			text: i18n("Show background")
+		}
+		
+		Label {
 			text: i18n("On click:")
 		}
 		
 		ExclusiveGroup { id: clickGroup }
 		
 		RadioButton {
-			Layout.row: 5
+			Layout.row: 7
 			Layout.column: 1
 			exclusiveGroup: clickGroup
 			checked: cfg_onClickAction == 'refresh'
@@ -122,7 +142,7 @@ Item {
 		}
 
 		RadioButton {
-			Layout.row: 6
+			Layout.row: 8
 			Layout.column: 1
 			exclusiveGroup: clickGroup
 			checked: cfg_onClickAction == 'website'
