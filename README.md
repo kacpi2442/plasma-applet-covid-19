@@ -44,10 +44,11 @@ Use additional `-g` flag to install plasmoid globally, for all users.
 
 ![Bitcoin Price Plasmoid (Configuration)](https://raw.githubusercontent.com/MakG10/plasma-applet-bitcoin-price/master/bitcoin-price-config.png)
 
-## Changelog
+## Contributors
+- Maciej Gierej
+- NasCorp
 
-### 1.3
-- Added new exchange source: CEX
+## Changelog
 
 ### 1.2
 - Added new exchange sources: Bitfinex, Bitstamp, Kraken, GDAX

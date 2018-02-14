@@ -131,7 +131,7 @@ Item {
 		ExclusiveGroup { id: clickGroup }
 		
 		RadioButton {
-			Layout.row: 8
+			Layout.row: 7
 			Layout.column: 1
 			exclusiveGroup: clickGroup
 			checked: cfg_onClickAction == 'refresh'
