@@ -22,6 +22,7 @@ Use additional `-g` flag to install plasmoid globally, for all users.
 - Bitstamp
 - Kraken
 - GDAX
+- Cex.io
 
 ## Supported currencies
 - USD ($) - US Dollar
@@ -42,6 +43,10 @@ Use additional `-g` flag to install plasmoid globally, for all users.
 ![Bitcoin Price Plasmoid (Panel)](https://raw.githubusercontent.com/MakG10/plasma-applet-bitcoin-price/master/bitcoin-price-panel.png)
 
 ![Bitcoin Price Plasmoid (Configuration)](https://raw.githubusercontent.com/MakG10/plasma-applet-bitcoin-price/master/bitcoin-price-config.png)
+
+## Contributors
+- Maciej Gierej
+- NasCorp
 
 ## Changelog
 
