@@ -82,7 +82,7 @@ var sources = [
 	},
 ];
 
-var currencyApiUrl = 'http://api.fixer.io';
+var currencyApiUrl = 'http://free.currencyconverterapi.com';
 
 var currencySymbols = {
 	'USD': '$',  // US Dollar
@@ -99,12 +99,14 @@ var currencySymbols = {
 };
 
 function getRate(source, currency, callback) {
-	var source = typeof source === 'undefined' ? getSourceByName('Bitmarket.pl') : getSourceByName(source);
+	source = typeof source === 'undefined' ? getSourceByName('Bitmarket.pl') : getSourceByName(source);
 	
 	if(source === null) return false;
 	
-	request(source.url, function(req) {
-		var data = JSON.parse(req.responseText);
+	request(source.url, function(data) {
+		if(data.length === 0) return false;
+
+		data = JSON.parse(data);
 		var rate = source.getRate(data);
 		
 		if(source.currency != currency) {
@@ -149,9 +151,10 @@ function getAllCurrencies() {
 }
 
 function convert(value, from, to, callback) {
-	request(currencyApiUrl + '/latest?base=' + from, function(req) {
-		var data = JSON.parse(req.responseText);
-		var rate = data.rates[to];
+	var currencyPair = from + '_' + to;
+	request(currencyApiUrl + '/api/v3/convert?q=' + currencyPair + '&compact=ultra', function(data) {
+		data = JSON.parse(data);
+		var rate = data[currencyPair];
 		
 		callback(value * rate);
 	});
@@ -159,11 +162,11 @@ function convert(value, from, to, callback) {
 
 function request(url, callback) {
 	var xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = (function(xhr) {
-		return function() {
-			callback(xhr);
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState === 4) {
+			callback(xhr.responseText);
 		}
-	})(xhr);
+	};
 	xhr.open('GET', url, true);
 	xhr.send('');
 }

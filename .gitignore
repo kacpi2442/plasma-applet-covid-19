@@ -2,3 +2,4 @@ build
 .kdev4
 *.jsc
 *.qmlc
+.idea

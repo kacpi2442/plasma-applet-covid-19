@@ -45,6 +45,10 @@ Use additional `-g` flag to install plasmoid globally, for all users.
 
 ## Changelog
 
+### 1.2.1
+- Changed currency converter API from fixer.io to currencyconverterapi.com
+- Fixed XHR request and callback (could cause unnecessary multiple API calls)
+
 ### 1.2
 - Added new exchange sources: Bitfinex, Bitstamp, Kraken, GDAX
 - Added "Show decimals" option to show/hide decimals in the price
