@@ -80,6 +80,15 @@ var sources = [
 			return data.ask;
 		}
 	},
+	{
+		name: 'CEX.IO',
+		url: 'https://cex.io/api/last_price/BTC/USD',
+		homepage: 'https://cex.io',
+		currency: 'USD',
+		getRate: function(data) {
+			return data.lprice;
+		}
+	},
 ];
 
 var currencyApiUrl = 'http://free.currencyconverterapi.com';
