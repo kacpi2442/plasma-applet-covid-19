@@ -7,11 +7,11 @@
   <group name="General">
     <entry name="source" type="String">
       <label>Source</label>
-      <default>CoinMarketCap</default>
+      <default>corona.lmao.ninja</default>
     </entry>
-	<entry name="currency" type="String">
-      <label>Currency</label>
-      <default>USD</default>
+    <entry name="country" type="String">
+      <label>Country</label>
+      <default>Poland</default>
     </entry>
     <entry name="refreshRate" type="Int">
       <label>Refresh rate</label>
@@ -28,10 +28,6 @@
     <entry name="onClickAction" type="String">
       <label>On click</label>
       <default>refresh</default>
-    </entry>
-    <entry name="showDecimals" type="bool">
-      <label>Show decimals</label>
-      <default>true</default>
     </entry>
     <entry name="showBackground" type="bool">
       <label>Show background</label>

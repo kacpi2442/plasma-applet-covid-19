@@ -3,21 +3,19 @@ import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 
 import ".."
-import "../../code/bitcoin.js" as Bitcoin
+import "../../code/covid.js" as Covid
 
 Item {
 	id: configGeneral
 	Layout.fillWidth: true
 	property string cfg_source: plasmoid.configuration.source
-	property string cfg_currency: plasmoid.configuration.currency
-	property string cfg_onClickAction: plasmoid.configuration.onClickAction
+	property string cfg_country: plasmoid.configuration.country
 	property alias cfg_refreshRate: refreshRate.value
 	property alias cfg_showIcon: showIcon.checked
 	property alias cfg_showText: showText.checked
-	property alias cfg_showDecimals: showDecimals.checked
 	property alias cfg_showBackground: showBackground.checked
-	property variant sourceList: { Bitcoin.getAllSources() }
-	property variant currencyList: { Bitcoin.getAllCurrencies() }
+	property variant sourceList: { Covid.getAllSources() }
+	property variant countryList: { Covid.getAllCountries() }
 
 	GridLayout {
 		columns: 2
@@ -43,21 +41,21 @@ Item {
 		}
 		
 		Label {
-			text: i18n("Currency:")
+			text: i18n("Country:")
 		}
 		
 		ComboBox {
-			id: currency
-			model: currencyList
+			id: country
+			model: countryList
 			Layout.minimumWidth: theme.mSize(theme.defaultFont).width * 15
 			onActivated: {
-				cfg_currency = currency.textAt(index)
+				cfg_country = country.textAt(index)
 			}
 			Component.onCompleted: {
-				var currencyIndex = currency.find(plasmoid.configuration.currency)
+				var countryIndex = country.find(plasmoid.configuration.country)
 				
-				if(currencyIndex != -1) {
-					currency.currentIndex = currencyIndex
+				if(countryIndex != -1) {
+					country.currentIndex = countryIndex
 				}
 			}
 		}
@@ -106,14 +104,6 @@ Item {
 			}
 		}
 		
-		Label {
-			text: ""
-		}
-		
-		CheckBox {
-			id: showDecimals
-			text: i18n("Show decimals")
-		}
 		
 		Label {
 			text: ""
@@ -124,32 +114,5 @@ Item {
 			text: i18n("Show background")
 		}
 		
-		Label {
-			text: i18n("On click:")
-		}
-		
-		ExclusiveGroup { id: clickGroup }
-		
-		RadioButton {
-			Layout.row: 7
-			Layout.column: 1
-			exclusiveGroup: clickGroup
-			checked: cfg_onClickAction == 'refresh'
-			text: i18n("Refresh")
-			onClicked: {
-				cfg_onClickAction = 'refresh'
-			}
-		}
-
-		RadioButton {
-			Layout.row: 8
-			Layout.column: 1
-			exclusiveGroup: clickGroup
-			checked: cfg_onClickAction == 'website'
-			text: i18n("Open market's website")
-			onClicked: {
-				cfg_onClickAction = 'website'
-			}
-		}
 	}
 }
