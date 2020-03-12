@@ -2,6 +2,8 @@ var sources = [
 	{
 		name: 'corona.lmao.ninja',
 		url: 'https://corona.lmao.ninja/countries',
+		method: "GET",
+		requestBody: '',
 		getRate: function(data, country) {
 			for (var i = 0; i < data.length; i++){
   				if (data[i].country == country){
@@ -14,6 +16,8 @@ var sources = [
 	{
 		name: 'coronavirusapi.me',
 		url: 'https://coronavirusapi.me',
+		method: "POST",
+		requestBody: '{"query":"{locations{region confirmed}}"}',
 		getRate: function(data, country) {
 			var confirmed = 0
 			if (country=="UK") country="United Kingdom";
@@ -40,24 +44,12 @@ function getRate(source, country, callback) {
 	source = typeof source === 'undefined' ? getSourceByName('corona.lmao.ninja') : getSourceByName(source);
 	
 	if(source === null) return false;
-	if(source.name == 'coronavirusapi.me'){
-		request(source.url, "POST", '{"query":"{locations{region confirmed}}"}', function(data) {
-			if(data.length === 0) return false;
-			data = JSON.parse(data);
-			var rate = source.getRate(data, country);
-			
-			callback(rate);
-		});
-	}else{
-		request(source.url, "GET", "", function(data) {	
-			if(data.length === 0) return false;
-
-			data = JSON.parse(data);
-			var rate = source.getRate(data, country);
-
-			callback(rate);
-		});
-	}
+	request(source.url, source.method, source.requestBody, function(data) {	
+		if(data.length === 0) return false;
+		data = JSON.parse(data);
+		var rate = source.getRate(data, country);
+		callback(rate);
+	});
 	
 	return true;
 }
