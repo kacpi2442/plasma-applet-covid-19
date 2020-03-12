@@ -19,5 +19,8 @@ Use additional `-g` flag to install plasmoid globally, for all users.
 
 ## Changelog
 
+### 1.0.1
+Added support for coronavirusapi.me
+
 ### 1.0
 Initial release

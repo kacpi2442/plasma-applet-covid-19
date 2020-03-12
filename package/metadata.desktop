@@ -7,7 +7,7 @@ Type=Service
 ServiceTypes=Plasma/Applet
 
 X-KDE-PluginInfo-Author=Kacper Huzar
-X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-Version=1.0.1
 X-KDE-PluginInfo-Website=http://2442.pl
 X-KDE-PluginInfo-Category=Utilities
 X-KDE-PluginInfo-Depends=
