@@ -11,6 +11,24 @@ var sources = [
 			return "0";
 		}
 	},
+	{
+		name: 'coronavirusapi.me',
+		url: 'https://coronavirusapi.me',
+		getRate: function(data, country) {
+			var confirmed = 0
+			if (country=="UK") country="United Kingdom";
+			if (country=="UAE") country="United Arab Emirates";
+			if (country=="Taiwan") country="Taiwan*";
+			if (country=="Diamond Princess") country="Cruise Ship";
+			if (country=="S. Korea") country="Korea, South";
+			for (var i = 0; i < data.data.locations.length; i++){
+  				if (data.data.locations[i].region == country){
+						confirmed += data.data.locations[i].confirmed;
+ 					}
+			}
+			return confirmed;
+		}
+	},
 ];
 
 
@@ -22,14 +40,24 @@ function getRate(source, country, callback) {
 	source = typeof source === 'undefined' ? getSourceByName('corona.lmao.ninja') : getSourceByName(source);
 	
 	if(source === null) return false;
-	request(source.url, function(data) {
-		if(data.length === 0) return false;
+	if(source.name == 'coronavirusapi.me'){
+		request(source.url, "POST", '{"query":"{locations{region confirmed}}"}', function(data) {
+			if(data.length === 0) return false;
+			data = JSON.parse(data);
+			var rate = source.getRate(data, country);
+			
+			callback(rate);
+		});
+	}else{
+		request(source.url, "GET", "", function(data) {	
+			if(data.length === 0) return false;
 
-		data = JSON.parse(data);
-		var rate = source.getRate(data, country);
-		
-		callback(rate);
-	});
+			data = JSON.parse(data);
+			var rate = source.getRate(data, country);
+
+			callback(rate);
+		});
+	}
 	
 	return true;
 }
@@ -54,13 +82,16 @@ function getAllSources() {
 	return sourceNames;
 }
 
-function request(url, callback) {
+function request(url, type, params, callback) {
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState === 4) {
 			callback(xhr.responseText);
 		}
 	};
-	xhr.open('GET', url, true);
-	xhr.send('');
+	xhr.open(type, url, true);
+	xhr.setRequestHeader("Accept-Encoding", "gzip, deflate, br");
+	xhr.setRequestHeader("Content-Type", "application/json");
+	xhr.setRequestHeader("Accept", "application/json");
+	xhr.send(params);
 }
