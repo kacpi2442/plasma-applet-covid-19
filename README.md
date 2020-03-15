@@ -20,11 +20,11 @@ Use additional `-g` flag to install plasmoid globally, for all users.
 ## Changelog
 
 ### 1.0.2
-Displays now global cases by default
-New svg icon
+- Displays now global cases by default
+- New svg icon
 
 ### 1.0.1
-Added support for coronavirusapi.me
+- Added support for coronavirusapi.me
 
 ### 1.0
-Initial release
+- Initial release
