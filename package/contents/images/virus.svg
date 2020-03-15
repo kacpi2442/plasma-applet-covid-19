@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 334.8916 333.98901" fill="white" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <g transform="translate(-169.84 -290.15)">
+  <g id="a">
+   <path id="d" d="m284.16 408.85 23.844 10.136 29.159-17.7v-22.987l-53.003 30.55z"/>
+   <use transform="matrix(-1 0 0 1 674.33 -.073306)" width="351.66501" height="990" xlink:href="#d"/>
+  </g>
+  <g id="b" transform="translate(0,-1.4877)">
+   <path id="c" d="m306.46 497.35 14.019-8.0939 16.69 28.909v67.782l-75.808 39.674-76.254-44.025 70.207 18.32 58.461-43.397-7.3156-59.168z"/>
+   <use transform="matrix(-1 0 0 1 674.33 .0057556)" width="334.58145" height="332.21567" xlink:href="#c"/>
+  </g>
+  <use transform="matrix(-.5 -.86603 .86603 -.5 94.899 1003.9)" width="334.58145" height="332.21567" xlink:href="#b"/>
+  <use transform="matrix(-.5 .86603 -.86603 -.5 916.85 420.05)" width="334.58145" height="332.21567" xlink:href="#b"/>
+  <use transform="matrix(-.5 .86603 -.86603 -.5 915.34 419.18)" width="334.58145" height="332.21567" xlink:href="#a"/>
+  <use transform="matrix(-.5 -.86603 .86603 -.5 95.986 1003.3)" width="334.58145" height="332.21567" xlink:href="#a"/>
+ </g>
+</svg>

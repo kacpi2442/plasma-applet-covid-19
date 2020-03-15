@@ -75,7 +75,7 @@ Item {
 			anchors.topMargin: parent.height * 0.05
 			anchors.leftMargin: root.showText ? parent.height * 0.05 : 0
 			
-			source: "../images/virus.jpg"
+			source: "../images/virus.svg"
 			visible: root.showIcon
 			opacity: root.updatingRate ? 0.2 : mouseArea.containsMouse ? 0.8 : 1.0
 		}
