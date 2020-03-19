@@ -33,5 +33,9 @@
       <label>Show background</label>
       <default>true</default>
     </entry>
+    <entry name="formatNumber" type="bool">
+      <label>Format number</label>
+      <default>true</default>
+    </entry>
   </group>
 </kcfg>

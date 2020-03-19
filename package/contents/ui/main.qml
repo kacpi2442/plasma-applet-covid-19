@@ -18,6 +18,7 @@ Item {
 	property string covidCases: '...'
 	property bool showIcon: plasmoid.configuration.showIcon
 	property bool showText: plasmoid.configuration.showText
+	property bool formatNumber: plasmoid.configuration.formatNumber
 	property bool updatingRate: false
 	
 	Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
@@ -129,10 +130,14 @@ Item {
 			
 			var result = Covid.getRate(plasmoid.configuration.source, plasmoid.configuration.country, function(rate) {
 				
-				var rateText = Number(rate);
+                var rateText = Number(rate);
+                
+                if (root.formatNumber) {
+                    rateText = Number(rate).toLocaleString(Qt.locale(), 'f', 0);
+                }
 				
 				root.covidCases = rateText;
-				
+            
 				var toolTipSubText = '<b>' + root.covidCases + '</b>';
 				toolTipSubText += '<br />';
 				toolTipSubText += i18n('Source:') + ' ' + plasmoid.configuration.source;

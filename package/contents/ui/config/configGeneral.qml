@@ -14,6 +14,7 @@ Item {
 	property alias cfg_showIcon: showIcon.checked
 	property alias cfg_showText: showText.checked
 	property alias cfg_showBackground: showBackground.checked
+	property alias cfg_formatNumber: formatNumber.checked
 	property variant sourceList: { Covid.getAllSources() }
 	property variant countryList: { Covid.getAllCountries() }
 
@@ -112,6 +113,15 @@ Item {
 		CheckBox {
 			id: showBackground
 			text: i18n("Show background")
+		}
+		
+		Label {
+			text: ""
+		}
+		
+		CheckBox {
+			id: formatNumber
+			text: i18n("Format number for locale")
 		}
 		
 	}
