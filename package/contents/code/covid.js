@@ -58,10 +58,13 @@ function getRate(source, country, callback) {
 	
 	if(source === null) return false;
 	request(source.url, source.method, source.requestBody, function(data) {	
-		if(data.length === 0) return false;
-		data = JSON.parse(data);
-		var rate = source.getRate(data, country);
-		callback(rate);
+		try {
+			data = JSON.parse(data);
+			var rate = source.getRate(data, country);
+			callback(rate);
+		} catch (e) {
+			callback(null);
+		}
 	});
 	
 	return true;

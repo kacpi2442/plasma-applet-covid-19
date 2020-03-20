@@ -118,6 +118,18 @@ Item {
 		}
 	}
 	
+	function setRate(rate) {
+		var rateText = (rate === null ? plasmoid.configuration.rate : Number(rate));
+		plasmoid.configuration.rate = rateText;
+		root.covidCases = rateText;
+		
+		var toolTipSubText = '<b>' + root.covidCases + '</b>';
+		toolTipSubText += '<br />';
+		toolTipSubText += i18n('Source:') + ' ' + plasmoid.configuration.source;
+		
+		plasmoid.toolTipSubText = toolTipSubText;
+	}
+	
 	Timer {
 		id: refreshTimer
 		interval: plasmoid.configuration.refreshRate * 60 * 1000
@@ -126,21 +138,23 @@ Item {
 		triggeredOnStart: true
 		onTriggered: {
 			root.updatingRate = true;
+			refreshTimeout.start();
 			
 			var result = Covid.getRate(plasmoid.configuration.source, plasmoid.configuration.country, function(rate) {
-				
-				var rateText = Number(rate);
-				
-				root.covidCases = rateText;
-				
-				var toolTipSubText = '<b>' + root.covidCases + '</b>';
-				toolTipSubText += '<br />';
-				toolTipSubText += i18n('Source:') + ' ' + plasmoid.configuration.source;
-				
-				plasmoid.toolTipSubText = toolTipSubText;
-				
+				setRate(rate);
 				root.updatingRate = false;
+				refreshTimeout.stop();
 			});
+		}
+	}
+	
+	Timer {
+		id: refreshTimeout
+		interval: 30000
+		repeat: false
+		onTriggered: {
+			setRate(null);
+			root.updatingRate = false
 		}
 	}
 	
