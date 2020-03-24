@@ -117,6 +117,9 @@ Item {
 		onRefreshRateChanged: {
 			refreshTimer.restart();
 		}
+		onFormatNumberChanged: {
+			refreshTimer.restart();
+		}
 	}
 	
 	Timer {
