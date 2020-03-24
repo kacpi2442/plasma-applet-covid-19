@@ -19,6 +19,12 @@ Use additional `-g` flag to install plasmoid globally, for all users.
 
 ## Changelog
 
+### 1.1
+- Added option to format number count according to locale 
+- Added request error handling and timeout
+- Added support for pomber.github.io/covid19
+- Changed default refresh rate to 20 minutes
+
 ### 1.0.2
 - Displays now global cases by default
 - New svg icon
