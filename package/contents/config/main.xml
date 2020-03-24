@@ -37,5 +37,8 @@
       <label>Format number</label>
       <default>true</default>
     </entry>
+    <entry name="rate" type="int">
+      <default>0</default>
+    </entry>
   </group>
 </kcfg>
