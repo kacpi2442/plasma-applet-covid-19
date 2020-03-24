@@ -15,7 +15,7 @@
     </entry>
     <entry name="refreshRate" type="Int">
       <label>Refresh rate</label>
-      <default>10</default>
+      <default>20</default>
     </entry>
     <entry name="showIcon" type="bool">
       <label>Show icon</label>
