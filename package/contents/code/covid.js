@@ -46,6 +46,32 @@ var sources = [
 			return confirmed;
 		}
 	},
+	{
+		name: 'pomber.github.io/covid19',
+		url: 'https://pomber.github.io/covid19/timeseries.json',
+		method: "GET",
+		requestBody: '',
+		getRate: function(data, country) {
+			var confirmed = 0
+			if (country=="All"){
+				for (var i = 0; i < Object.keys(data).length; i++){
+					confirmed += data[Object.keys(data)[i]][data[Object.keys(data)[i]].length-1].confirmed;
+			 	}
+				return confirmed;
+			}
+			if (country=="UK") country="United Kingdom";
+			if (country=="UAE") country="United Arab Emirates";
+			if (country=="Taiwan") country="Taiwan*";
+			if (country=="Diamond Princess") country="Cruise Ship";
+			if (country=="S. Korea") country="Korea, South";
+			for (var i = 0; i < Object.keys(data).length; i++){
+  				if (Object.keys(data)[i] == country){
+					return data[Object.keys(data)[i]][data[Object.keys(data)[i]].length-1].confirmed;
+ 				}
+			}
+			return "0";
+		}
+	},
 ];
 
 

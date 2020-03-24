@@ -13,7 +13,7 @@ Use additional `-g` flag to install plasmoid globally, for all users.
 ## Screenshots
 ![COVID-19 Plasmoid](sh1.png)
 
-![COVID-19 Plasmoid (Panel)](sh2.png))
+![COVID-19 Plasmoid (Panel)](sh2.png)
 
 ![COVID-19 Plasmoid (Configuration)](sh3.png)
 
