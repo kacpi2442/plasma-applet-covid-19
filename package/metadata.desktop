@@ -1,18 +1,18 @@
 [Desktop Entry]
-Name=COVID-19 cases
-Comment=Shows current coronavirus (COVID-19) cases by country.
+Name=COVID-19 Monitor
+Comment=Displays current statistics about COVID-19 in the country of the user's choice.
 
 Icon=applications-science
 Type=Service
 ServiceTypes=Plasma/Applet
 
-X-KDE-PluginInfo-Author=Kacper Huzar
-X-KDE-PluginInfo-Version=1.1
-X-KDE-PluginInfo-Website=http://2442.pl
+X-KDE-PluginInfo-Author=StrangeAlmond
+X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-Website=
 X-KDE-PluginInfo-Category=Utilities
 X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-EnabledByDefault=true
-X-KDE-PluginInfo-Name=org.kde.plasma.covidrate
+X-KDE-PluginInfo-Name=org.kde.plasma.covid19monitor
 
 X-Plasma-API=declarativeappletscript
 X-Plasma-MainScript=ui/main.qml
