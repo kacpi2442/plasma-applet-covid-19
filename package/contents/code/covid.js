@@ -61,7 +61,7 @@ var sources = [
 		},
 		getDeaths: function(data, country) {
 			var deaths = 0;
-			if (country == "ALL") {
+			if (country == "All") {
 				for(var i = 0; i < data.data.locations.length; i++) {
 					deaths += data.data.locations[i].deaths;
 				}
@@ -115,7 +115,7 @@ var sources = [
 			 	}
 				return deaths;
 			}
-			
+
 			if (country=="UK") country="United Kingdom";
 			if (country=="UAE") country="United Arab Emirates";
 			if (country=="Taiwan") country="Taiwan*";
