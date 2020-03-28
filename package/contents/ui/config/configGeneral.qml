@@ -13,6 +13,8 @@ Item {
 	property alias cfg_refreshRate: refreshRate.value
 	property alias cfg_showIcon: showIcon.checked
 	property alias cfg_showText: showText.checked
+	property alias cfg_showCases: showCases.checked
+	property alias cfg_showDeaths: showDeaths.checked
 	property alias cfg_showBackground: showBackground.checked
 	property alias cfg_formatNumber: formatNumber.checked
 	property variant sourceList: { Covid.getAllSources() }
@@ -99,8 +101,57 @@ Item {
 				if(!this.checked) {
 					showIcon.checked = true
 					showIcon.enabled = false
+
+					showCases.checked = false;
+					showCases.enabled = false;
+					showDeaths.checked = false;
+					showDeaths.enabled = false;
+
 				} else {
 					showIcon.enabled = true
+
+					showCases.checked = true;
+					showCases.enabled = true;
+					showDeaths.checked = true;
+					showDeaths.enabled = true;
+				}
+			}
+		}
+
+		Label {
+			text: ""
+		}
+
+		CheckBox {
+			id: showCases
+			text: i18n("Show cases")
+			onClicked: {
+				if(!this.checked && !showDeaths.checked) {
+					showIcon.checked = true;
+					showIcon.enabled = false;
+					showText.checked = false;
+				} else {
+					showIcon.enabled = true;
+					showText.checked = true;
+				}
+			}
+		}
+
+		Label {
+			text: ""
+		}
+
+		CheckBox {
+			id: showDeaths
+			text: i18n("Show deaths")
+			onClicked: {
+				if(!this.checked && !showCases.checked) {
+					showIcon.checked = true;
+					showIcon.enabled = false;
+					showText.checked = false;
+				} else {
+					showIcon.enabled = true;
+					showText.checked = true;
 				}
 			}
 		}
