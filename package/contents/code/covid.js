@@ -18,13 +18,27 @@ var sources = [
  				}
 			}
 			return "0";
+		},
+		getDeaths: function(data, country) {
+			if (country=="All"){
+				var dead = 0;
+				for(var i = 0; i < data.length; i++){
+					dead += data[i].deaths;
+				}
+				return dead;
+			}
+			for(var i = 0; i < data.length; i++){
+				if(data[i].country == country){
+					return data[i].deaths;
+				}
+			}
 		}
 	},
 	{
 		name: 'coronavirusapi.me',
 		url: 'https://coronavirusapi.me',
 		method: "POST",
-		requestBody: '{"query":"{locations{region confirmed}}"}',
+		requestBody: '{"query":"{locations{region confirmed deaths}}"}',
 		getRate: function(data, country) {
 			var confirmed = 0
 			if (country=="All"){
@@ -44,6 +58,27 @@ var sources = [
  					}
 			}
 			return confirmed;
+		},
+		getDeaths: function(data, country) {
+			var deaths = 0;
+			if (country == "ALL") {
+				for(var i = 0; i < data.data.locations.length; i++) {
+					deaths += data.data.locations[i].deaths;
+				}
+				return deaths;
+			}
+
+			if (country=="UK") country="United Kingdom";
+			if (country=="UAE") country="United Arab Emirates";
+			if (country=="Taiwan") country="Taiwan*";
+			if (country=="Diamond Princess") country="Cruise Ship";
+			if (country=="S. Korea") country="Korea, South";
+			
+			for(var i = 0; i < data.data.locations.length; i++) {
+				if(data.data.locations[i].region == country) {
+					deaths += data.data.locations[i].deaths;
+				}
+			}
 		}
 	},
 	{
@@ -70,6 +105,30 @@ var sources = [
  				}
 			}
 			return "0";
+		},
+		getDeaths: function(data, country) {
+			var deaths = 0
+
+			if (country=="All") {
+				for (var i = 0; i < Object.keys(data).length; i++){
+					deaths += data[Object.keys(data)[i]][data[Object.keys(data)[i]].length-1].deaths;
+			 	}
+				return deaths;
+			}
+			
+			if (country=="UK") country="United Kingdom";
+			if (country=="UAE") country="United Arab Emirates";
+			if (country=="Taiwan") country="Taiwan*";
+			if (country=="Diamond Princess") country="Cruise Ship";
+			if (country=="S. Korea") country="Korea, South";
+
+			for (var i = 0; i < Object.keys(data).length; i++) {
+  				if (Object.keys(data)[i] == country){
+					return data[Object.keys(data)[i]][data[Object.keys(data)[i]].length-1].deaths;
+ 				}
+			}
+
+			return "0";
 		}
 	},
 ];
@@ -94,6 +153,21 @@ function getRate(source, country, callback) {
 	});
 	
 	return true;
+}
+
+function getDeaths(source, country, callback) {
+	source = typeof source === "undefined" ? getSourceByName("corona.lmao.ninja") : getSourceByName(source);
+
+	if(source === null) return false;
+	request(source.url, source.method, source.requestBody, function(data) {
+		try {
+			data = JSON.parse(data);
+			var deaths = source.getDeaths(data, country);
+			callback(deaths)
+		} catch(e) {
+			callback(null);
+		}
+	});
 }
 
 function getSourceByName(name) {
