@@ -17,6 +17,7 @@ Item {
 	
 	property string covidCases: '...'
 	property string covidDeaths: '...'
+	property string country: plasmoid.configuration.country
 	property bool showIcon: plasmoid.configuration.showIcon
 	property bool showText: plasmoid.configuration.showText
 	property bool showCases: plasmoid.configuration.showCases
@@ -159,8 +160,8 @@ Item {
 					setDeaths(deaths, function(deathsText) {
 						var toolTipSubText = "<b> Cases: " + rateText + "<br />";
 						toolTipSubText += "Deaths: " + deathsText + "</b>";
-						toolTipSubText += '<br />';
-						toolTipSubText += i18n('Source:') + ' ' + plasmoid.configuration.source;
+						toolTipSubText += "<br /> Country: " + root.country + "<br />";
+						toolTipSubText += i18n("Source:") + ' ' + plasmoid.configuration.source;
 						
 						plasmoid.toolTipSubText = toolTipSubText;
 
