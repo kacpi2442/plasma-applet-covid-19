@@ -5,33 +5,38 @@ var sources = [
 		method: "GET",
 		requestBody: '',
 		getRate: function(data, country) {
-			if (country=="All"){
+			if (country=="All") {
 				var confirmed = 0
 				for (var i = 0; i < data.length; i++){
 					confirmed += data[i].cases;
 				}
 				return confirmed;
 			}
-			for (var i = 0; i < data.length; i++){
+
+			for (var i = 0; i < data.length; i++) {
   				if (data[i].country == country){
 					return data[i].cases;
  				}
 			}
-			return "0";
+
+			return 0;
 		},
 		getDeaths: function(data, country) {
 			if (country=="All"){
 				var dead = 0;
-				for(var i = 0; i < data.length; i++){
+				for (var i = 0; i < data.length; i++) {
 					dead += data[i].deaths;
 				}
 				return dead;
 			}
-			for(var i = 0; i < data.length; i++){
+
+			for (var i = 0; i < data.length; i++) {
 				if(data[i].country == country){
-					return data[i].deaths;
+					return data[i].deaths || 0;
 				}
 			}
+
+			return 0;
 		}
 	},
 	{
@@ -42,7 +47,7 @@ var sources = [
 		getRate: function(data, country) {
 			var confirmed = 0
 			if (country=="All"){
-				for (var i = 0; i < data.data.locations.length; i++){
+				for (var i = 0; i < data.data.locations.length; i++) {
 					confirmed += data.data.locations[i].confirmed;
 				}
 				return confirmed;
@@ -52,12 +57,14 @@ var sources = [
 			if (country=="Taiwan") country="Taiwan*";
 			if (country=="Diamond Princess") country="Cruise Ship";
 			if (country=="S. Korea") country="Korea, South";
-			for (var i = 0; i < data.data.locations.length; i++){
+
+			for (var i = 0; i < data.data.locations.length; i++) {
   				if (data.data.locations[i].region == country){
 						confirmed += data.data.locations[i].confirmed;
  					}
 			}
-			return confirmed;
+
+			return confirmed || 0;
 		},
 		getDeaths: function(data, country) {
 			var deaths = 0;
@@ -79,6 +86,8 @@ var sources = [
 					deaths += data.data.locations[i].deaths;
 				}
 			}
+
+			return deaths || 0;
 		}
 	},
 	{
@@ -89,7 +98,7 @@ var sources = [
 		getRate: function(data, country) {
 			var confirmed = 0
 			if (country=="All"){
-				for (var i = 0; i < Object.keys(data).length; i++){
+				for (var i = 0; i < Object.keys(data).length; i++) {
 					confirmed += data[Object.keys(data)[i]][data[Object.keys(data)[i]].length-1].confirmed;
 			 	}
 				return confirmed;
@@ -99,12 +108,14 @@ var sources = [
 			if (country=="Taiwan") country="Taiwan*";
 			if (country=="Diamond Princess") country="Cruise Ship";
 			if (country=="S. Korea") country="Korea, South";
-			for (var i = 0; i < Object.keys(data).length; i++){
+
+			for (var i = 0; i < Object.keys(data).length; i++) {
   				if (Object.keys(data)[i] == country){
 					return data[Object.keys(data)[i]][data[Object.keys(data)[i]].length-1].confirmed;
  				}
 			}
-			return "0";
+
+			return 0;
 		},
 		getDeaths: function(data, country) {
 			var deaths = 0
@@ -124,11 +135,11 @@ var sources = [
 
 			for (var i = 0; i < Object.keys(data).length; i++) {
   				if (Object.keys(data)[i] == country){
-					return data[Object.keys(data)[i]][data[Object.keys(data)[i]].length-1].deaths;
+					return data[Object.keys(data)[i]][data[Object.keys(data)[i]].length-1].deaths || 0;
  				}
 			}
 
-			return "0";
+			return 0;
 		}
 	},
 ];
