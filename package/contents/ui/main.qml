@@ -12,14 +12,17 @@ import "../code/covid.js" as Covid
 
 Item {
 	id: root
-	
+
 	Layout.fillHeight: true
 	
 	property string covidCases: '...'
+	property string covidDeaths: '...'
 	property bool showIcon: plasmoid.configuration.showIcon
 	property bool showText: plasmoid.configuration.showText
+	property bool showCases: plasmoid.configuration.showCases
+	property bool showDeaths: plasmoid.configuration.showDeaths
 	property bool formatNumber: plasmoid.configuration.formatNumber
-	property bool updatingRate: false
+	property bool updatingStats: false
 	
 	Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
 	Plasmoid.toolTipTextFormat: Text.RichText
@@ -38,7 +41,15 @@ Item {
 			}
 		}
 		
-		Layout.fillWidth: false
+		property int fontSize: {
+			if(root.showCases && root.showDeaths) {
+				return 30;
+			} else {
+				return 50;
+			}
+		}
+		
+		Layout.fillWidth: true
 		Layout.minimumWidth: minWidth
 
 		MouseArea {
@@ -63,8 +74,8 @@ Item {
 			width: parent.height
 			height: parent.height
 			anchors.horizontalCenter: root.showIcon ? virusIcon.horizontalCenter : currentCases.horizontalCenter
-			running: updatingRate
-			visible: updatingRate
+			running: updatingStats
+			visible: updatingStats
 		}
 		
 		Image {
@@ -78,7 +89,7 @@ Item {
 			
 			source: "../images/virus.svg"
 			visible: root.showIcon
-			opacity: root.updatingRate ? 0.2 : mouseArea.containsMouse ? 0.8 : 1.0
+			opacity: root.updatingStats ? 0.2 : mouseArea.containsMouse ? 0.8 : 1.0
 		}
 		
 		PlasmaComponents.Label {
@@ -89,15 +100,34 @@ Item {
 			anchors.leftMargin: root.showIcon ? textMargin : 0
 			
 			horizontalAlignment: root.showIcon ? Text.AlignLeft : Text.AlignHCenter
-			verticalAlignment: Text.AlignVCenter
+			verticalAlignment: root.showDeaths ? Text.AlignTop : Text.AlignVCenter
 			
-			visible: root.showText
-			opacity: root.updatingRate ? 0.2 : mouseArea.containsMouse ? 0.8 : 1.0
+			visible: root.showText && root.showCases
+			opacity: root.updatingStats ? 0.2 : mouseArea.containsMouse ? 0.8 : 1.0
 			
 			fontSizeMode: Text.Fit
 			minimumPixelSize: virusIcon.width * 0.7
-			font.pixelSize: 72			
+			font.pixelSize: fontSize
 			text: root.covidCases
+		}
+
+		PlasmaComponents.Label {
+			id: currentDeaths
+			height: parent.height
+			anchors.left: root.showIcon ? virusIcon.right : parent.left
+			anchors.right: parent.right
+			anchors.leftMargin: root.showIcon ? textMargin : 0
+
+			horizontalAlignment: root.showIcon ? Text.AlignLeft : Text.AlignHCenter
+			verticalAlignment: root.showCases ? Text.AlignBottom : Text.AlignVCenter
+
+			visible: root.showText && root.showDeaths
+			opacity: root.updatingStats ? 0.2 : mouseArea.containsMouse ? 0.8 : 1.0
+
+			fontSizeMode: Text.Fit
+			minimumPixelSize: virusIcon.width * 0.7
+			font.pixelSize: fontSize
+			text: root.covidDeaths
 		}
 	}
 	
@@ -121,18 +151,42 @@ Item {
 			refreshTimer.restart();
 		}
 	}
+
+	function updateStats(source, country, callback) {
+		Covid.getRate(source, country, function(rate) {
+			setRate(rate, function(rateText) {
+				Covid.getDeaths(source, country, function(deaths) {
+					setDeaths(deaths, function(deathsText) {
+						var toolTipSubText = "<b> Cases: " + rateText + "<br />";
+						toolTipSubText += "Deaths: " + deathsText + "</b>";
+						toolTipSubText += '<br />';
+						toolTipSubText += i18n('Source:') + ' ' + plasmoid.configuration.source;
+						
+						plasmoid.toolTipSubText = toolTipSubText;
+
+						toolTipSubText += "Deaths: " + root.covidDeaths + "</b>";
+
+						callback(true);
+					});
+				});
+			});
+		});
+	}
 	
-	function setRate(rate) {
+	function setRate(rate, callback) {
 		var rateText = (rate === null ? plasmoid.configuration.rate : Number(rate));
 		if (root.formatNumber) rateText = (rate === null ? plasmoid.configuration.rate : Number(rate).toLocaleString(Qt.locale(), 'f', 0));
 		plasmoid.configuration.rate = rateText;
-		root.covidCases = rateText;
-		
-		var toolTipSubText = '<b>' + root.covidCases + '</b>';
-		toolTipSubText += '<br />';
-		toolTipSubText += i18n('Source:') + ' ' + plasmoid.configuration.source;
-		
-		plasmoid.toolTipSubText = toolTipSubText;
+		root.covidCases = root.showText ? "Cases: " + rateText : "";
+		callback(rateText);
+	}
+
+	function setDeaths(deaths, callback) {
+		var deathsText = (deaths === null ? plasmoid.configuration.deaths : Number(deaths));
+		if(root.formatNumber) deathsText = (deaths === null ? plasmoid.configuration.deaths : Number(deaths).toLocaleString(Qt.locale(), "f", 0));
+		plasmoid.configuration.deaths = deathsText;
+		root.covidDeaths = root.showText ? "Deaths: " + deathsText : "";
+		callback(deathsText);
 	}
 	
 	Timer {
@@ -142,12 +196,11 @@ Item {
 		repeat: true
 		triggeredOnStart: true
 		onTriggered: {
-			root.updatingRate = true;
+			root.updatingStats = true;
 			refreshTimeout.start();
 			
-			var result = Covid.getRate(plasmoid.configuration.source, plasmoid.configuration.country, function(rate) {
-				setRate(rate);
-				root.updatingRate = false;
+			var result = updateStats(plasmoid.configuration.source, plasmoid.configuration.country, function(status) {
+				root.updatingStats = false;
 				refreshTimeout.stop();
 			});
 		}
@@ -159,7 +212,7 @@ Item {
 		repeat: false
 		onTriggered: {
 			setRate(null);
-			root.updatingRate = false
+			root.updatingStats = false
 		}
 	}
 	
