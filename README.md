@@ -9,3 +9,6 @@ plasmapkg2 -i package
 ```
 
 Use additional `-g` flag to install plasmoid globally, for all users.
+
+## Screenshots
+![COVID-19 Monitor](sh1.png)
