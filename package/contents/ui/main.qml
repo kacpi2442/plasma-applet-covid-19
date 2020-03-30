@@ -158,14 +158,12 @@ Item {
 			setRate(rate, function(rateText) {
 				Covid.getDeaths(source, country, function(deaths) {
 					setDeaths(deaths, function(deathsText) {
-						var toolTipSubText = "<b> Cases: " + rateText + "<br />";
-						toolTipSubText += "Deaths: " + deathsText + "</b>";
-						toolTipSubText += "<br /> Country: " + root.country + "<br />";
+						var toolTipSubText = "<b> " + i18n("Cases: ") + rateText + "<br />";
+						toolTipSubText += i18n("Deaths: ") + deathsText + "</b>";
+						toolTipSubText += "<br /> " + i18n("Country: ") + root.country + "<br />";
 						toolTipSubText += i18n("Source:") + ' ' + plasmoid.configuration.source;
-						
-						plasmoid.toolTipSubText = toolTipSubText;
 
-						toolTipSubText += "Deaths: " + root.covidDeaths + "</b>";
+						plasmoid.toolTipSubText = toolTipSubText;
 
 						callback(true);
 					});
@@ -178,7 +176,7 @@ Item {
 		var rateText = (rate === null ? plasmoid.configuration.rate : Number(rate));
 		if (root.formatNumber) rateText = (rate === null ? plasmoid.configuration.rate : Number(rate).toLocaleString(Qt.locale(), 'f', 0));
 		plasmoid.configuration.rate = rateText;
-		root.covidCases = root.showText ? "Cases: " + rateText : "";
+		root.covidCases = root.showText ? i18n("Cases: ") + rateText : "";
 		callback(rateText);
 	}
 
@@ -186,7 +184,7 @@ Item {
 		var deathsText = (deaths === null ? plasmoid.configuration.deaths : Number(deaths));
 		if(root.formatNumber) deathsText = (deaths === null ? plasmoid.configuration.deaths : Number(deaths).toLocaleString(Qt.locale(), "f", 0));
 		plasmoid.configuration.deaths = deathsText;
-		root.covidDeaths = root.showText ? "Deaths: " + deathsText : "";
+		root.covidDeaths = root.showText ? i18n("Deaths: ") + deathsText : "";
 		callback(deathsText);
 	}
 	
