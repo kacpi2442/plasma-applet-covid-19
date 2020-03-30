@@ -7,7 +7,7 @@ Type=Service
 ServiceTypes=Plasma/Applet
 
 X-KDE-PluginInfo-Author=StrangeAlmond
-X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-Version=1.2
 X-KDE-PluginInfo-Website=
 X-KDE-PluginInfo-Category=Utilities
 X-KDE-PluginInfo-Depends=
