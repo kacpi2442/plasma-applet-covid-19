@@ -1,7 +1,7 @@
 var sources = [
 	{
 		name: 'corona.lmao.ninja',
-		url: 'https://corona.lmao.ninja/countries',
+		url: 'https://corona.lmao.ninja/v2/countries',
 		method: "GET",
 		requestBody: '',
 		getRate: function(data, country) {
