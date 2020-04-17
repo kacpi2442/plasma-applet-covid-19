@@ -46,6 +46,32 @@ var sources = [
 			return confirmed;
 		}
 	},
+	{
+		name: 'pomber.github.io/covid19',
+		url: 'https://pomber.github.io/covid19/timeseries.json',
+		method: "GET",
+		requestBody: '',
+		getRate: function(data, country) {
+			var confirmed = 0
+			if (country=="All"){
+				for (var i = 0; i < Object.keys(data).length; i++){
+					confirmed += data[Object.keys(data)[i]][data[Object.keys(data)[i]].length-1].confirmed;
+			 	}
+				return confirmed;
+			}
+			if (country=="UK") country="United Kingdom";
+			if (country=="UAE") country="United Arab Emirates";
+			if (country=="Taiwan") country="Taiwan*";
+			if (country=="Diamond Princess") country="Cruise Ship";
+			if (country=="S. Korea") country="Korea, South";
+			for (var i = 0; i < Object.keys(data).length; i++){
+  				if (Object.keys(data)[i] == country){
+					return data[Object.keys(data)[i]][data[Object.keys(data)[i]].length-1].confirmed;
+ 				}
+			}
+			return "0";
+		}
+	},
 ];
 
 
@@ -58,10 +84,13 @@ function getRate(source, country, callback) {
 	
 	if(source === null) return false;
 	request(source.url, source.method, source.requestBody, function(data) {	
-		if(data.length === 0) return false;
-		data = JSON.parse(data);
-		var rate = source.getRate(data, country);
-		callback(rate);
+		try {
+			data = JSON.parse(data);
+			var rate = source.getRate(data, country);
+			callback(rate);
+		} catch (e) {
+			callback(null);
+		}
 	});
 	
 	return true;
