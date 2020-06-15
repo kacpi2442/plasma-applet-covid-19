@@ -15,6 +15,10 @@ Use additional `-g` flag to install plasmoid globally, for all users.
 
 ## Changelog
 
+### 1.4
+> by @mkljczk
+- Infer icon color from color scheme
+
 ### 1.3
 > by @StrangeAlmond
 - Added current deaths info
