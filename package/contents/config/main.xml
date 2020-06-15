@@ -25,14 +25,6 @@
       <label>Show text</label>
       <default>true</default>
     </entry>
-    <entry name="showCases" type="bool">
-      <label>Show cases</label>
-      <default>true</default>
-    </entry>
-    <entry name="showDeaths" type="bool">
-      <label>Show deaths</label>
-      <default>true</default>
-    </entry>
     <entry name="onClickAction" type="String">
       <label>On click</label>
       <default>refresh</default>
