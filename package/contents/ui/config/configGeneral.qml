@@ -22,11 +22,11 @@ Item {
 
 	GridLayout {
 		columns: 2
-		
+
 		Label {
 			text: i18n("Source:")
 		}
-		
+
 		ComboBox {
 			id: source
 			model: sourceList
@@ -36,17 +36,17 @@ Item {
 			}
 			Component.onCompleted: {
 				var sourceIndex = source.find(plasmoid.configuration.source)
-				
+
 				if(sourceIndex != -1) {
 					source.currentIndex = sourceIndex
 				}
 			}
 		}
-		
+
 		Label {
 			text: i18n("Country:")
 		}
-		
+
 		ComboBox {
 			id: country
 			model: countryList
@@ -56,27 +56,27 @@ Item {
 			}
 			Component.onCompleted: {
 				var countryIndex = country.find(plasmoid.configuration.country)
-				
+
 				if(countryIndex != -1) {
 					country.currentIndex = countryIndex
 				}
 			}
 		}
-		
+
 		Label {
 			text: i18n("Refresh rate:")
 		}
-		
+
 		SpinBox {
 			id: refreshRate
 			suffix: i18n(" minutes")
 			minimumValue: 1
 		}
-		
+
 		Label {
 			text: ""
 		}
-		
+
 		CheckBox {
 			id: showIcon
 			text: i18n("Show icon")
@@ -89,11 +89,11 @@ Item {
 				}
 			}
 		}
-		
+
 		Label {
 			text: ""
 		}
-		
+
 		CheckBox {
 			id: showText
 			text: i18n("Show text (when disabled, the rate is visible on hover)")
@@ -155,25 +155,25 @@ Item {
 				}
 			}
 		}
-		
-		
+
+
 		Label {
 			text: ""
 		}
-		
+
 		CheckBox {
 			id: showBackground
 			text: i18n("Show background")
 		}
-		
+
 		Label {
 			text: ""
 		}
-		
+
 		CheckBox {
 			id: formatNumber
 			text: i18n("Format number for locale")
 		}
-		
+
 	}
 }

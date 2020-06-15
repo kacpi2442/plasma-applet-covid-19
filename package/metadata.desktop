@@ -6,13 +6,13 @@ Icon=applications-science
 Type=Service
 ServiceTypes=Plasma/Applet
 
-X-KDE-PluginInfo-Author=StrangeAlmond
-X-KDE-PluginInfo-Version=1.2
-X-KDE-PluginInfo-Website=
+X-KDE-PluginInfo-Author=Kacper Huzar,tjaart,StrangeAlmond,Rakshazi
+X-KDE-PluginInfo-Version=1.3
+X-KDE-PluginInfo-Website=http://2442.pl
 X-KDE-PluginInfo-Category=Utilities
 X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-EnabledByDefault=true
-X-KDE-PluginInfo-Name=org.kde.plasma.covid19monitor
+X-KDE-PluginInfo-Name=org.kde.plasma.covidrate
 
 X-Plasma-API=declarativeappletscript
 X-Plasma-MainScript=ui/main.qml

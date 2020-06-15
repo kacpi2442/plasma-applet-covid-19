@@ -14,7 +14,7 @@ Item {
 	id: root
 
 	Layout.fillHeight: true
-	
+
 	property string covidCases: '...'
 	property string covidDeaths: '...'
 	property string country: plasmoid.configuration.country
@@ -24,11 +24,11 @@ Item {
 	property bool showDeaths: plasmoid.configuration.showDeaths
 	property bool formatNumber: plasmoid.configuration.formatNumber
 	property bool updatingStats: false
-	
+
 	Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
 	Plasmoid.toolTipTextFormat: Text.RichText
 	Plasmoid.backgroundHints: plasmoid.configuration.showBackground ? "StandardBackground" : "NoBackground"
-	
+
 	Plasmoid.compactRepresentation: Item {
 		property int textMargin: virusIcon.height * 0.25
 		property int minWidth: {
@@ -41,7 +41,7 @@ Item {
 				return currentCases.paintedWidth
 			}
 		}
-		
+
 		property int fontSize: {
 			if(root.showCases && root.showDeaths) {
 				return 30;
@@ -49,7 +49,7 @@ Item {
 				return 50;
 			}
 		}
-		
+
 		Layout.fillWidth: true
 		Layout.minimumWidth: minWidth
 
@@ -62,7 +62,7 @@ Item {
 					case 'website':
 						action_website();
 						break;
-					
+
 					case 'refresh':
 					default:
 						action_refresh();
@@ -70,7 +70,7 @@ Item {
 				}
 			}
 		}
-		
+
 		BusyIndicator {
 			width: parent.height
 			height: parent.height
@@ -78,7 +78,7 @@ Item {
 			running: updatingStats
 			visible: updatingStats
 		}
-		
+
 		Image {
 			id: virusIcon
 			width: parent.height * 0.9
@@ -87,25 +87,25 @@ Item {
 			anchors.left: parent.left
 			anchors.topMargin: parent.height * 0.05
 			anchors.leftMargin: root.showText ? parent.height * 0.05 : 0
-			
+
 			source: "../images/virus.svg"
 			visible: root.showIcon
 			opacity: root.updatingStats ? 0.2 : mouseArea.containsMouse ? 0.8 : 1.0
 		}
-		
+
 		PlasmaComponents.Label {
 			id: currentCases
 			height: parent.height
 			anchors.left: root.showIcon ? virusIcon.right : parent.left
 			anchors.right: parent.right
 			anchors.leftMargin: root.showIcon ? textMargin : 0
-			
+
 			horizontalAlignment: root.showIcon ? Text.AlignLeft : Text.AlignHCenter
 			verticalAlignment: root.showDeaths ? Text.AlignTop : Text.AlignVCenter
-			
+
 			visible: root.showText && root.showCases
 			opacity: root.updatingStats ? 0.2 : mouseArea.containsMouse ? 0.8 : 1.0
-			
+
 			fontSizeMode: Text.Fit
 			minimumPixelSize: virusIcon.width * 0.7
 			font.pixelSize: fontSize
@@ -131,11 +131,11 @@ Item {
 			text: root.covidDeaths
 		}
 	}
-	
+
 	Component.onCompleted: {
 		plasmoid.setAction('refresh', i18n("Refresh"), 'view-refresh')
 	}
-	
+
 	Connections {
 		target: plasmoid.configuration
 
@@ -171,7 +171,7 @@ Item {
 			});
 		});
 	}
-	
+
 	function setRate(rate, callback) {
 		var rateText = (rate === null ? plasmoid.configuration.rate : Number(rate));
 		if (root.formatNumber) rateText = (rate === null ? plasmoid.configuration.rate : Number(rate).toLocaleString(Qt.locale(), 'f', 0));
@@ -187,7 +187,7 @@ Item {
 		root.covidDeaths = root.showText ? i18n("Deaths: ") + deathsText : "";
 		callback(deathsText);
 	}
-	
+
 	Timer {
 		id: refreshTimer
 		interval: plasmoid.configuration.refreshRate * 60 * 1000
@@ -197,14 +197,14 @@ Item {
 		onTriggered: {
 			root.updatingStats = true;
 			refreshTimeout.start();
-			
+
 			var result = updateStats(plasmoid.configuration.source, plasmoid.configuration.country, function(status) {
 				root.updatingStats = false;
 				refreshTimeout.stop();
 			});
 		}
 	}
-	
+
 	Timer {
 		id: refreshTimeout
 		interval: 30000
@@ -214,11 +214,11 @@ Item {
 			root.updatingStats = false
 		}
 	}
-	
+
 	function action_refresh() {
 		refreshTimer.restart();
 	}
-	
+
 	function action_website() {
 		Qt.openUrlExternally(Covid.getSourceByName(plasmoid.configuration.source).homepage);
 	}
