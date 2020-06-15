@@ -5,6 +5,7 @@
 import QtQuick 2.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.4
+import QtGraphicalEffects 1.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.components 2.0 as PlasmaComponents
@@ -14,6 +15,10 @@ Item {
 	id: root
 
 	Layout.fillHeight: true
+
+    SystemPalette {
+		id: palette
+	}
 
 	property string covidCases: '...'
 	property string covidDeaths: '...'
@@ -91,6 +96,12 @@ Item {
 			source: "../images/virus.svg"
 			visible: root.showIcon
 			opacity: root.updatingStats ? 0.2 : mouseArea.containsMouse ? 0.8 : 1.0
+		}
+
+        ColorOverlay {
+			anchors.fill: virusIcon
+			source: virusIcon
+			color: palette.windowText
 		}
 
 		PlasmaComponents.Label {
