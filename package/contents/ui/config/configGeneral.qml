@@ -13,6 +13,8 @@ Item {
 	property alias cfg_refreshRate: refreshRate.value
 	property alias cfg_showIcon: showIcon.checked
 	property alias cfg_showText: showText.checked
+	property alias cfg_showCases: showCases.checked
+	property alias cfg_showDeaths: showDeaths.checked
 	property alias cfg_showBackground: showBackground.checked
 	property alias cfg_formatNumber: formatNumber.checked
 	property variant sourceList: { Covid.getAllSources() }
@@ -20,11 +22,11 @@ Item {
 
 	GridLayout {
 		columns: 2
-		
+
 		Label {
 			text: i18n("Source:")
 		}
-		
+
 		ComboBox {
 			id: source
 			model: sourceList
@@ -34,17 +36,17 @@ Item {
 			}
 			Component.onCompleted: {
 				var sourceIndex = source.find(plasmoid.configuration.source)
-				
+
 				if(sourceIndex != -1) {
 					source.currentIndex = sourceIndex
 				}
 			}
 		}
-		
+
 		Label {
 			text: i18n("Country:")
 		}
-		
+
 		ComboBox {
 			id: country
 			model: countryList
@@ -54,27 +56,27 @@ Item {
 			}
 			Component.onCompleted: {
 				var countryIndex = country.find(plasmoid.configuration.country)
-				
+
 				if(countryIndex != -1) {
 					country.currentIndex = countryIndex
 				}
 			}
 		}
-		
+
 		Label {
 			text: i18n("Refresh rate:")
 		}
-		
+
 		SpinBox {
 			id: refreshRate
 			suffix: i18n(" minutes")
 			minimumValue: 1
 		}
-		
+
 		Label {
 			text: ""
 		}
-		
+
 		CheckBox {
 			id: showIcon
 			text: i18n("Show icon")
@@ -87,11 +89,11 @@ Item {
 				}
 			}
 		}
-		
+
 		Label {
 			text: ""
 		}
-		
+
 		CheckBox {
 			id: showText
 			text: i18n("Show text (when disabled, the rate is visible on hover)")
@@ -99,30 +101,79 @@ Item {
 				if(!this.checked) {
 					showIcon.checked = true
 					showIcon.enabled = false
+
+					showCases.checked = false;
+					showCases.enabled = false;
+					showDeaths.checked = false;
+					showDeaths.enabled = false;
+
 				} else {
 					showIcon.enabled = true
+
+					showCases.checked = true;
+					showCases.enabled = true;
+					showDeaths.checked = true;
+					showDeaths.enabled = true;
 				}
 			}
 		}
-		
-		
+
 		Label {
 			text: ""
 		}
-		
+
+		CheckBox {
+			id: showCases
+			text: i18n("Show cases")
+			onClicked: {
+				if(!this.checked && !showDeaths.checked) {
+					showIcon.checked = true;
+					showIcon.enabled = false;
+					showText.checked = false;
+				} else {
+					showIcon.enabled = true;
+					showText.checked = true;
+				}
+			}
+		}
+
+		Label {
+			text: ""
+		}
+
+		CheckBox {
+			id: showDeaths
+			text: i18n("Show deaths")
+			onClicked: {
+				if(!this.checked && !showCases.checked) {
+					showIcon.checked = true;
+					showIcon.enabled = false;
+					showText.checked = false;
+				} else {
+					showIcon.enabled = true;
+					showText.checked = true;
+				}
+			}
+		}
+
+
+		Label {
+			text: ""
+		}
+
 		CheckBox {
 			id: showBackground
 			text: i18n("Show background")
 		}
-		
+
 		Label {
 			text: ""
 		}
-		
+
 		CheckBox {
 			id: formatNumber
 			text: i18n("Format number for locale")
 		}
-		
+
 	}
 }
