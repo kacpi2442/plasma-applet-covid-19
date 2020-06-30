@@ -17,7 +17,13 @@ Use additional `-g` flag to install plasmoid globally, for all users.
 
 ![COVID-19 Plasmoid (Configuration)](sh3.png)
 
+![COVID-19 Plasmoid (Configuration)](sh4.png)
+
 ## Changelog
+
+### 1.2
+
+- Fixed lmao.ninja data source
 
 ### 1.1
 - Added option to format number count according to locale 
